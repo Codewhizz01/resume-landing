@@ -38,6 +38,17 @@ The page follows this order, top to bottom:
 8. **FAQ section** — a heading plus four question-and-answer pairs
 9. **Footer** — the product name, a short tagline, three grouped link columns (Product, Company, Legal), and a copyright line
 
+## CSS techniques used
+
+- **CSS variables** — colours, spacing, and radius values are all defined once in `:root` (e.g. `--accent`, `--bg`, `--radius`), so the whole theme can be adjusted from one place instead of hunting through the file.
+- **CSS Grid** — used for the stats strip, feature cards, template cards, testimonials, and footer columns, so they lay out in clean rows and reflow automatically on smaller screens.
+- **Flexbox** — used in the nav bar to space out the logo, links, and button evenly.
+- **Media queries** — breakpoints at 640px and 900px control how many columns each grid section shows, and the nav links hide on narrow screens to keep things clean on mobile.
+- **Hover states** — buttons lift slightly and lighten on hover (`transform` + `background-color`), and nav/footer links change colour on hover for feedback.
+- **Sticky header** — the nav bar stays fixed at the top while scrolling, using `position: sticky` with a slightly transparent, blurred background (`backdrop-filter: blur()`).
+- **Star ratings** — testimonial stars are plain text characters  styled with the accent colour and letter-spacing, instead of separate icon images — a lightweight way to show a rating without extra image files.
+- **Reusable card style** — feature, template, testimonial, and stat cards all share the same rounded-corner, bordered, padded look, so the whole page feels consistent without repeating styles from scratch each time.
+
 ##screenshot
 
  
