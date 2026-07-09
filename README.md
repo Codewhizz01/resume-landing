@@ -83,3 +83,145 @@ Since we haven't covered event handling yet, I kept `script.js` intentionally sm
 - **Small JS can still be meaningful.** Even without event handlers, using `querySelector` and `textContent` showed me how JavaScript can reach into a page and change it dynamically — a small taste of what's coming next.
 - **Following a written spec exactly is a different skill than building freely.** Matching every required section, in order, with the right technical constraints, forced me to slow down and check my work against the brief instead of just going with what looked good.
 
+
+
+--------------------  NOTES of what we learn in this project----------------------------------------------
+
+## Tech Stack
+
+- HTML5 (100% semantic, no `<div>` or `<span>`)
+- CSS3 (external stylesheets only, no inline styles)
+- Vanilla JavaScript
+- Google Fonts (Inter)
+- Git & GitHub
+
+---
+
+---
+
+## All HTML Tags Used In This Project
+
+| Tag | Purpose in this project |
+|--------------------------|-----------------------------------------------------------|
+| `<!DOCTYPE html>`        | Declares HTML5 document                                   |
+| `<html lang="en">`       | Root element, sets page language                          |
+| `<head>`                 | Metadata container                                        |
+| `<meta charset="UTF-8">` | Character encoding                                        |
+| `<meta name="viewport">` | Responsive scaling on mobile                              |
+| `<title>`                | Browser tab title                                         |
+| `<link>`                 | Loads Google Fonts and stylesheets                        |
+| `<body>`                 | Page content container                                    |
+| `<header>`               | Top navigation wrapper (landing page)                     |
+| `<nav>`                  | Navbar and footer link groups                             |
+| `<main>`                 | Main content wrapper on every page                        |
+| `<section>`              | Hero, stats, features, templates, testimonials,           |
+|                          | CTA, FAQ, auth-form-side, auth-form                       |
+| `<article>`              | Individual cards: stat cards, feature cards,              | 
+|                          | template cards, testimonial cards, FAQ items,             |
+|                          |         preview-card                                      |
+| `<aside>`                | Auth panel (right-side promotional column)                |
+| `<footer>`               | Site footer, and mini-testimonial block inside the        |
+|                          |  auth panel                                               |
+| `<h1>`                   | Page's main heading                                       |
+| `<h2>`                   | Section headings                                          |
+| `<h3>`                   | Card-level headings                                       |
+| `<h4>`                   | Footer column headings                                    |
+| `<p>`                    | Paragraphs, logo text, labels, dividers                   |
+| `<a>`                    | All links and button-styled links                         |
+| `<img>`                  | Feature icons, template preview images                    |
+| `<blockquote>`           | Testimonial quotes                                        |
+| `<ul>` / `<li>`          | Nav links, footer links, stats list                       |
+| `<form>`                 | Register and login forms                                  |
+| `<label>`                | Form field labels                                         |
+| `<input>`                | Name, email, password fields                              |
+| `<button>`               | Submit buttons                                            |
+| `<time>`                 | Dynamic copyright year                                    |
+| `<strong>`               | Stat numbers, trend indicator, testimonial name           |
+| `<small>`                | Stat labels                                               |
+| `<abbr title="...">`     | Avatar initials with tooltip                              |
+| `<svg>`                  | Google and Apple icon containers                          |
+| `<path>`                 | Vector shapes inside SVG icons                            |
+| `<script>`               | Loads script.js                                           |
+
+---
+
+
+
+## All CSS Tools / Properties / Concepts Used
+
+### Layout
+- `display: flex`, `flex-direction`, `justify-content`, `align-items`, `gap`, `flex: 1`
+
+### Positioning
+- `position: relative/absolute`, `top/left/right/bottom`, `z-index`, `overflow: hidden`, `transform: translateY()`
+
+### Backgrounds & Gradients
+- `background` shorthand, `linear-gradient()`, `radial-gradient()`, `background-size`
+
+### Visual Effects
+- `backdrop-filter: blur()`, `box-shadow`, `border-radius`, `border`, `border-top/bottom`
+
+### Typography
+- `font-family`, `font-size`, `font-weight`, `letter-spacing`, `text-transform`, `text-align`, `line-height`, `color`
+
+### Pseudo-classes & Pseudo-elements
+- `:hover`, `:focus`, `:first-child`, `:nth-child()`, `::before`, `::after`
+
+### Selectors
+- Class selectors, descendant selectors, grouped selectors, direct child combinator (`>`)
+
+### Responsive Design
+- `@media (max-width: 800px)` with `order: -1` to reorder stacked layout
+
+### Sizing & Spacing
+- `width`, `max-width`, `height`, `padding`, `margin`, `flex-shrink: 0`
+
+---
+
+
+
+## Pages Implemented
+
+### `index.html` — Landing Page
+Navbar, hero section, stats section, features (6 cards), templates (3 cards), testimonials (3 cards), CTA band, FAQ, footer with 3 link columns.
+
+### `register.html` — Create an Account
+Name/Email/Password/Confirm Password form, Google/Apple OAuth buttons, promotional panel with stats and testimonial.
+
+### `login.html` — Sign In
+Email/Password form with "Forgot password?" link, Google/Apple OAuth buttons, promotional panel with login-specific copy.
+
+---
+
+## Semantic HTML Rules Followed
+
+No `<div>` or `<span>` anywhere. Every wrapper is a meaningful element:
+- Layout wrappers → `<section>`, `<article>`, `<aside>`, `<header>`, `<footer>`, `<nav>`, `<main>`
+- List-like data → `<ul>` / `<li>`
+- Inline emphasis → `<strong>` / `<small>`
+- Avatar with tooltip → `<abbr title="Full Name">`
+
+---
+
+## OAuth Buttons (Google / Apple)
+
+Real inline SVG logos. Icon colors are kept out of the HTML and defined in `auth.css`:
+
+```css
+.google-icon path:nth-child(1) { fill: #4285F4; }
+.google-icon path:nth-child(2) { fill: #34A853; }
+.google-icon path:nth-child(3) { fill: #FBBC05; }
+.google-icon path:nth-child(4) { fill: #EA4335; }
+
+.apple-icon path {
+  fill: #ffffff;
+}
+
+
+---
+
+## JavaScript (`script.js`)
+
+- **Dynamic copyright year** — sets the text content of `<time id="year">` to the current year using `Date().getFullYear()`, so the footer never needs manual updates.
+- **Password visibility toggle** — each `.toggle-password` button listens for a click, finds its linked input via a `data-target` attribute, and switches the input's `type` between `password` and `text`. Also updates the button's `aria-label` ("Show password" / "Hide password") for screen reader accessibility.
+- **Nav link hover highlight** — each link inside `.nav-links` listens for `mouseover` and `mouseout` events to change and reset its text color, adding a subtle interactive effect without relying on CSS `:hover` alone.
