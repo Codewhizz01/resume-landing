@@ -87,17 +87,7 @@ Since we haven't covered event handling yet, I kept `script.js` intentionally sm
 
 --------------------  NOTES of what we learn in this project----------------------------------------------
 
-## Tech Stack
 
-- HTML5 (100% semantic, no `<div>` or `<span>`)
-- CSS3 (external stylesheets only, no inline styles)
-- Vanilla JavaScript
-- Google Fonts (Inter)
-- Git & GitHub
-
----
-
----
 
 ## All HTML Tags Used In This Project
 
