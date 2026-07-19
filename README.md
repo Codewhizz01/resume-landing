@@ -206,12 +206,76 @@ Real inline SVG logos. Icon colors are kept out of the HTML and defined in `auth
 .apple-icon path {
   fill: #ffffff;
 }
-
+```
 
 ---
 
 ## JavaScript (`script.js`)
 
-- **Dynamic copyright year** — sets the text content of `<time id="year">` to the current year using `Date().getFullYear()`, so the footer never needs manual updates.
-- **Password visibility toggle** — each `.toggle-password` button listens for a click, finds its linked input via a `data-target` attribute, and switches the input's `type` between `password` and `text`. Also updates the button's `aria-label` ("Show password" / "Hide password") for screen reader accessibility.
-- **Nav link hover highlight** — each link inside `.nav-links` listens for `mouseover` and `mouseout` events to change and reset its text color, adding a subtle interactive effect without relying on CSS `:hover` alone.
+
+# 1.Toggele password visiblity
+
+ - toggleButtons — selects every eye-icon button on the page.
+- handleTogglePassword — flips a password field between hidden (type="password") and visible (type="text").
+- data-target on the button tells it which input to control.
+- aria-label updates too, for screen reader accessibility.
+- forEach wires the click event onto every toggle button found.
+
+# 2. Nav link hover highlight
+- highlightLink — changes link color on mouse hover.
+- resetLink — removes the color when mouse leaves, falls back to CSS default.
+- forEach attaches both listeners to every nav link.
+
+# 3. Theme toggle
+
+- applyTheme — sets data-theme on <body> (CSS reacts to this) and updates the button icon.
+- On load, reads the saved theme from Local Storage, defaults to "light" if none exists.
+- Click handler flips the theme and saves the new choice with localStorage.setItem().
+- Persists even after closing the browser — that's the whole point of Local Storage.
+- Wrapped in if (themeToggle) since not every page has this button.
+
+# 4.Session draft for register form
+
+![ResumeFlow homepage screenshot](images/img1.png)
+
+
+- draftFields — only Name and Email are saved, passwords are never stored.
+- First loop — on page load, restores any saved draft into the input fields.
+- Second loop — saves the field's value into Session Storage on every keystroke.
+- Submit handler — prevents default reload, clears the draft since the form was actually submitted.
+- Draft disappears automatically when the tab closes (Session Storage behavior).
+- Wrapped in if (registerForm) so it only runs on the register page.
+
+# 5. IndexedDB Setup
+
+
+![ResumeFlow homepage screenshot](images/img2.png)
+
+
+- openDatabase — opens/creates the ResumeFlowDB database.
+- onupgradeneeded — runs only on first creation, sets up the notes object store.
+- onsuccess — saves the open connection into the db variable for other functions to use.
+- onerror — logs any failure.
+- addNote — inserts a new note with a Date.now() generated id.
+- getAllNotes — fetches every saved note, - delivered via a callback since it's async.
+- deleteNote — removes a note by its id.
+- openDatabase() runs immediately so the DB is ready before the user interacts.
+
+# 6. Note UI wired to indexedDB
+
+- renderNotes — fetches all notes and rebuilds the visible list, each with a Delete button.
+- Delete button click — removes the note from IndexedDB, then re-renders the list.
+- Form submit — prevents reload, adds the note, clears the input, re-renders the list.
+- setTimeout delays used since IndexedDB writes are async — gives the transaction time to finish before re-reading.
+- Wrapped in if (noteForm) so it only runs on pages with the Quick Notes section
+
+## Key Takeaways
+
+- Local Storage persists forever until manually cleared — used here for theme, since it should stay set across visits.
+- Session Storage clears when the tab closes — used here for the register form draft, since it's only meant to survive an accidental refresh, not a full session.
+- IndexedDB stores structured objects (not just strings) and survives indefinitely — used here for notes, since it needs to hold multiple fields per entry (id, title).
+- None of the three storage types send data to a server automatically — that's what makes them different from cookies.
+- Passwords are never saved in any browser storage, even temporarily — only non-sensitive fields (name, email) are stored in the session draft.
+- IndexedDB operations are asynchronous — reads and writes happen through callbacks, not direct return values, so the UI has to wait for confirmation before re-rendering.
+- Wrapping page-specific code in `if (element)` checks lets one shared `script.js` file run safely across multiple pages without throwing errors for missing elements.
+- `Date.now()` is used consistently as a unique ID generator across the project — same pattern used in the backend models.

@@ -399,3 +399,33 @@ footer {
 .btn-text:hover {
   color: #f4f4f5;
 }
+
+.notes-demo {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+.notes-demo form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.notes-demo input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+#notesList {
+  list-style: none;
+  padding: 0;
+}
+
+#notesList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
